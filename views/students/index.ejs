@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+	<title>students App</title>
+</head>
+<body>
+	<h1>Here are all of your students:</h1>
+	<ul>
+		<% for (var i = 0; i < ejsStudents.length; i++) { %>
+			<li>
+				<a href="/students/<%= i + 1 %>">Name: <%= ejsStudents[i].name %>, Age: <%= ejsStudents[i].age %>, Courses: <%= ejsStudents[i].Course.name %>
+					<% console.log("The student was:", ejsStudents[i]) %></a>
+				<form action="/students/<%= i + 1 %>?_method=DELETE" method="POST">
+					<input type="submit" value="Destroy">
+				</form>
+			</li>
+		<% } %>
+	</ul>
+
+	<a href="/students/new">Add a new student</a>
+
+</body>
+</html>

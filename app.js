@@ -23,59 +23,60 @@ app.get('/', function(req,res){
 	res.send("Home");
 });
 
-// List all classmates
-app.get('/classmates', function(req, res) {
-	db.Student.all().then(function(students){
-		res.render("index", { classmates: students } );
+// List all students
+app.get('/students', function(req, res) {
+	db.Student.findAll({ include: [ { model: db.Course } ] }).then(function(students){
+		console.log(students);
+		res.render("students/index", { students: students } );
 	});
 });
 
-// Render form to create classmate
-app.get('/classmates/new', function(req, res) {
-	res.render('new');
+// Render form to create student
+app.get('/students/new', function(req, res) {
+	res.render('students/new');
 });
 
-// Create classmate
-app.post('/classmates', function(req, res) {
-	db.Student.create({name: req.body.name, age: req.body.age, courseId: req.body.course_id})
+// Create student
+app.post('/students', function(req, res) {
+	db.Student.create({name: req.body.name, age: req.body.age, CourseId: req.body.course_id})
 	  .then(function(dbStudent){
 	  	console.log("\nn\n\n\nn\n\nTHIS IS STUDENT", dbStudent);
-	  	res.redirect('/classmates');
+	  	res.redirect('/students');
 	  })
 });
 
-// Show classmate
-app.get('/classmates/:id', function(req, res) {
+// Show student
+app.get('/students/:id', function(req, res) {
 	var id = req.params.id;
 
-	res.render('show', { classmate: classmates[id - 1], id: id });
+	res.render('students/show', { student: students[id - 1], id: id });
 });
 
-// Render form to edit classmate
-app.get('/classmates/:id/edit', function(req, res) {
+// Render form to edit student
+app.get('/students/:id/edit', function(req, res) {
 	var id = req.params.id;
 
-	res.render('edit', { classmate: classmates[id - 1], id: id });
+	res.render('edit', { student: students[id - 1], id: id });
 });
 
-// Update classmate
-app.patch('/classmates/:id', function(req, res) {
+// Update student
+app.patch('/students/:id', function(req, res) {
 	var id = req.params.id;
 
-	// Updates the classmate
-	classmates[id - 1] = req.body;
+	// Updates the student
+	students[id - 1] = req.body;
 
-	res.redirect('/classmates/' + id);
+	res.redirect('/students/' + id);
 });
 
-// Delete classmate
-app.delete('/classmates/:id', function(req, res) {
+// Delete student
+app.delete('/students/:id', function(req, res) {
 	var id = req.params.id;
 
-	// Delete the classmate
-	classmates.splice(id - 1, 1);
+	// Delete the student
+	students.splice(id - 1, 1);
 
-	res.redirect('/classmates');
+	res.redirect('/students');
 });
 
 // Create course
@@ -87,7 +88,7 @@ app.post('/courses', function(req, res) {
 	   });
 });
 
-// Render form to create classmate
+// Render form to create student
 app.get('/courses/new', function(req, res) {
 	res.render('courses/new');
 });
