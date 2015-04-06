@@ -1,0 +1,13 @@
+<!doctype>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<form action="/classmates/<%= id %>?_method=PATCH" method="POST">
+		<input type="text" name="name" value="<%= classmate.name %>">
+		<input type="text" name="age" value="<%= classmate.age %>">
+		<input type="submit">
+	</form>
+</body>
+</html>
