@@ -25,10 +25,11 @@ app.get('/', function(req,res){
 
 // List all students
 app.get('/students', function(req, res) {
-	db.Student.findAll({ include: [ { model: db.Course } ] }).then(function(students){
-		console.log(students);
-		res.render("students/index", { students: students } );
-	});
+	db.Student.findAll({ include: [ { model: db.Course } ] })
+	  .then(function(dbStudents){
+		console.log(dbStudents);
+		res.render("students/index", { ejsStudents: dbStudents } );
+	  });
 });
 
 // Render form to create student
